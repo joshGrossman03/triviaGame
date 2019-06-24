@@ -2,4 +2,27 @@
     color:#996644;
     background-color: #ccc;
     opacity: .75;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 35px;
+}
+
+.answerButton{
+    width:300px;
+    height:100px;
+    margin:15px;
+    opacity: 0.75;
+    font-size: 20px;
+    border-radius: 10px;
+    
+}
+
+.correct{
+    
+    background-color: lightseagreen;
+
+}
+#answerBlock{
+    margin-top:35px;
+    margin-bottom:20px;
 }
