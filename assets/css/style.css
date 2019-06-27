@@ -26,3 +26,12 @@
     margin-top:35px;
     margin-bottom:20px;
 }
+
+.questionHeader{
+    font-size: 30px;
+}
+
+#wrongAnswers, #correctAnswers{
+    background-color: black;
+    color: #ccc;
+}
