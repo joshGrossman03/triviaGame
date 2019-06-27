@@ -16,7 +16,7 @@
 </head>
 <body>
         <div class="view"
-        style="background-image: url('./assets/images/mainBackGround.png'); background-repeat:repeat; background-size: cover; background-position: center;">
+        style="background-image: url('./assets/images/mainBackGround.png'); background-repeat:repeat; background-size: cover; background-position: center; height:100vh">
    <div align="center"class="container startButton">
        <button class="strBut btn btn-info"type="button">Start The Game</button>
    </div>
@@ -31,16 +31,29 @@
         <div class="row" id="timerBlock">
             <div class="col-md-4"></div>
             <div class="col-md-4">
-                <h2 style="color:white" id="countdown"><!--timer is here--></h2>
+                <h2 align="center" style="color:white" id="countdown"><!--timer is here--></h2>
             </div>
             <div class="col-md-4"></div>
         </div>
         <div class="row">
-            <div class="col-md-3" id="correctAnswers"></div>
+            <div class="col-md-3" >
+                <p>Correct Answers</p>
+                <p id="correctAnswers"></p>
+            </div>
             <div class="col-md-6 questionBlock"><!--Question inserted here--></div>
-            <div class="col-md-3" id= "wrongAnswers"></div>
+            <div class="col-md-3" >
+                <p>Wrong Answers</p>
+                <p id= "wrongAnswers"></p>
+            </div>
         </div>
         
+    </div>
+    <div class="container gameOver">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 gameResults"></div>
+            <div class="col-md-4"></div>
+        </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="./assets/javascript/game.js"></script>

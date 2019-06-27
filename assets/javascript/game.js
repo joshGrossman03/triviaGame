@@ -21,7 +21,8 @@ var showSlide;
 var showTimer;
 var timeLeft = 10;
 var answer = "";
-var cAns= "";
+var cAns = "";
+$(".gameOver").hide();
 
 
 //functions
@@ -83,6 +84,7 @@ function triviaQuestions(triviaQuestion, answer1, answer2, answer3, answer4, pic
 
 //on click event to start game
 $(".strBut").click(function () {
+  $(".gameOver").hide();
   $(".startButton").hide();
   $(".mainGame").show();
   slides();
@@ -94,25 +96,25 @@ $(".strBut").click(function () {
 
 
 
-$(document.body).on('click', '.answerButton' ,function(){
- // $("#correctAnswers").html("<p> You pressed a button! </p>");
+$(document.body).on('click', '.answerButton', function () {
+  // $("#correctAnswers").html("<p> You pressed a button! </p>");
   //$("#correctAnswers").append($(this).attr("data-correctanswer"));
   answer = $(this).attr("data-answer");
   cAns = $(this).attr("data-correctanswer");
-  gameScore(answer,cAns);
+  gameScore(answer, cAns);
   console.log(answer);
   console.log(cAns);
-  
+
 });
 
 
-  
-function gameScore(answer,cAns){
 
-  if(answer === cAns){
-    
+function gameScore(answer, cAns) {
+
+  if (answer === cAns) {
+
     correctAnswers++;
-    $("#correctAnswers").html("You have answered "+correctAnswers+" correctly.");
+    $("#correctAnswers").html("<br> You have answered " + correctAnswers + " correctly.");
     stopTimer();
     stopSlideshow();
     timeLeft = 10;
@@ -121,67 +123,46 @@ function gameScore(answer,cAns){
     slideTransition();
     startSlideshow();
     console.log(slideCounter);
-   
-  }
-  else{
-    wrongAnswers++;
-  $("#wrongAnswers").html("You have answered "+wrongAnswers+" incorrectly.");
-  stopTimer();
-  stopSlideshow();
-  timeLeft = 10;
-  slideCounter++;
-  startTimer();
-  slideTransition();
-  startSlideshow();
 
-  console.log(slideCounter);
- 
   }
-  
+  else {
+    wrongAnswers++;
+    $("#wrongAnswers").html("<br> You have answered " + wrongAnswers + " incorrectly.");
+    stopTimer();
+    stopSlideshow();
+    timeLeft = 10;
+    slideCounter++;
+    startTimer();
+    slideTransition();
+    startSlideshow();
+
+    console.log(slideCounter);
+
+  }
+
 
 }
-  //$("#wrongAnswers").css("{background-color:black; color:white;}");
-  //var sldAns =  $(this).attr("data-answer");
-  //var cAns = $(this).attr("data-correctanswer");
- // if(sldAns = cAns){
-  //  correctAnswers++;
- //   $("#correctAnswers").text("Correct Answers: "+ correctAnswers);
-  //}
-  //else {
-  //  wrongAnswers++;
- //   $("#wrongAnswers").text("Wrong Answers: "+ correctAnswers);
- // }
-//});
 
-/*function slideShow() {
- var timeleft = 15;
-  $("#countdown").html(timeleft);
-  $(".questionBlock").html(slidesArray[slideCounter]);
- 
-  setInterval(slideShow,15000)
-  slideCounter++;
-  timeleft--;
-  console.log(slideCounter);
-
-  if (slideCounter >= slidesArray.length) {
-    slideCounter = 0;
-  }
-}*/
 
 function slideTransition() {
   //slideCounter++;
   $(".questionBlock").html(slidesArray[slideCounter]);
 
- 
+
 
   if (slideCounter === slidesArray.length) {
     slideCounter = 0;
+    stopTimer();
+    stopSlideshow();
+    timeLeft = 10;
+    slideCounter++;
+    gameOver();
   }
 }
 var timerIterations = 150;
 function slideTimer() {
 
-  $("#countdown").html("Time Remaing to Log Answer:" + timeLeft + " seconds.");
+  $("#countdown").html("Time Remaing:<br>" + timeLeft + " seconds");
   timeLeft--;
   timerIterations--;
   if (timeLeft === -1) {
@@ -189,7 +170,7 @@ function slideTimer() {
     timeLeft = 10;
   }
   //if (timerIterations === 0) {
-   // stopTimer();
+  // stopTimer();
   //}
 }
 
@@ -213,71 +194,22 @@ function stopTimer() {
   clearInterval(showTimer);
 }
 
+function gameOver() {
+  $(".mainGame").hide();
+  $(".gameOver").show();
+  $(".gameResults").append("Great Game!<br><br>You Answered " + correctAnswers + " questions correctly!<br><br>");
+  $(".gameResults").append("You Answered " + wrongAnswers + " questions incorrectly!<br><br>");
 
+  unAnswered = 10 - (correctAnswers + wrongAnswers);
+  $(".gameResults").append("You left " + unAnswered + " questions unanswered!");
+  $(".startButton").show();
+  themeSong.pause();
+  unAnswered = 0;
+  correctAnswers = 0;
+  wrongAnswers = 0;
+  slideCounter=0;
+  $("#correctAnswers").empty();
+  $("#wrongAnswers").empty();
 
-/*var timeleft = 15;
-function slideTimer() {
-  var interval = setInterval(function () {
-    $("#countdown").html(timeleft);
-    timeleft--;
-    if (timeleft <= 0) {
-      clearInterval(interval);
-      //timeleft=15;
-    }
-  }, 1000);
-}*/
-
-/*// TODO: Put links to our images in this image array.
-var images = ["images/bootstrap.png", "images/github-logo.jpg", "images/logo_JavaScript.png"];
-
-// Variable showImage will hold the setInterval when we start the slideshow
-var showImage;
-
-// Count will keep track of the index of the currently displaying picture.
-var count = 0;
-
-// TODO: Use jQuery to run "startSlideshow" when we click the "start" button.
-$("#start").click(startSlideshow);
-
-// TODO: Use jQuery to run "stopSlideshow" when we click the "stop" button.
-$("#stop").click(stopSlideshow);
-
-
-// This function will replace display whatever image it's given
-// in the 'src' attribute of the img tag.
-function displayImage() {
-  $("#image-holder").html("<img src=" + images[count] + " width='400px'>");
-}
-
-function nextImage() {
-  //  TODO: Increment the count by 1.
-  count++;
-
-  // TODO: Show the loading gif in the "image-holder" div.
-  $("#image-holder").html("<img src='images/loading.gif' width='200px'/>");
-
-  // TODO: Use a setTimeout to run displayImage after 1 second.
-  setTimeout(displayImage, 1000);
-
-  // TODO: If the count is the same as the length of the image array, reset the count to 0.
-  if (count === images.length) {
-    count = 0;
-  }
-}
-
-function startSlideshow() {
-
-  // TODO: Use showImage to hold the setInterval to run nextImage.
-  showImage = setInterval(nextImage, 3000);
 
 }
-
-function stopSlideshow() {
-
-  // TODO: Put our clearInterval here:
-  clearInterval(showImage);
-
-}
-
-// This will run the display image function as soon as the page loads.
-displayImage();*/
